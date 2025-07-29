@@ -18,37 +18,37 @@
     - [ ] Multi-line Comments (`/* ... */`)
     - [ ] Indentation & Readability
 
-  - [ ] Variables:
+  - [x] Variables:
 
-    - [ ] Variable Scope
-      - [ ] Global Scope
-      - [ ] Function Scope
-      - [ ] Block Scope
-    - [ ] Variable Declarations
-      - [ ] `var`
-      - [ ] `let`
-      - [ ] `const`
-    - [ ] Variable Assignments
-      - [ ] Initializing variables
-      - [ ] Reassigning values
-    - [ ] Hoisting
+    - [x] Variable Scope
+      - [x] Global Scope
+      - [x] Function Scope
+      - [x] Block Scope
+    - [x] Variable Declarations
+      - [x] `var`
+      - [x] `let`
+      - [x] `const`
+    - [x] Variable Assignments
+      - [x] Initializing variables
+      - [x] Reassigning values
 
-  - [ ] Data Types:
+  - [x] Hoisting
 
-    - [ ] Primitive Types:
-      - [ ] string
-      - [ ] number
-      - [ ] boolean
-      - [ ] null
-      - [ ] undefined
-      - [ ] symbol
-      - [ ] bigint
-    - [ ] Reference Types:
-      - [ ] object
-      - [ ] array
-      - [ ] function
-    - [ ] Type checking using `typeof`
-    - [ ] Type conversion (implicit & explicit)
+  - [x] Data Types:
+
+    - [x] Primitive Types:
+      - [x] string
+      - [x] number
+      - [x] boolean
+      - [x] undefined
+      - [x] null
+      - [x] bigint
+      - [x] symbol
+    - [x] Reference Types:
+      - [x] object
+      - [x] array
+      - [x] function
+    - [x] Type checking using `typeof`
 
   - [ ] Basic Input/Output:
 
@@ -96,9 +96,12 @@
     - [ ] `!` Logical NOT
 
   - [ ] Unary Operators
+
     - [ ] `!` NOT
     - [ ] `typeof` Type check
     - [ ] `++` Increment
     - [ ] `--` Decrement
     - [ ] `+value` Unary plus (convert to number)
     - [ ] `-value` Unary minus (negate value)
+
+  - [ ] Type conversion (implicit & explicit)
