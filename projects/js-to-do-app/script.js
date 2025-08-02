@@ -13,12 +13,13 @@ todoForm.addEventListener("submit", (e) => {
   todoInput.value = "";
 });
 
-function addTask(task) {
+function addTask(task, completed = false) {
   const li = document.createElement("li");
   const newSpan = document.createElement("span");
   newSpan.textContent = task;
 
   li.appendChild(newSpan);
+  if (completed) li.classList.add("completed");
   todoList.appendChild(li);
 
   newSpan.addEventListener("click", function () {
@@ -38,24 +39,22 @@ function addTask(task) {
 }
 
 function saveTasks() {
-  localStorage.setItem("todoList", todoList.innerHTML);
+  let tasks = [];
+  todoList.querySelectorAll("li").forEach((li) => {
+    const taskText = li.querySelector("span").textContent;
+    const completed = li.classList.contains("completed");
+    tasks.push({ text: taskText, completed: completed });
+  });
+  localStorage.setItem("todoList", JSON.stringify(tasks));
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   const savedTasks = localStorage.getItem("todoList");
   if (!savedTasks) return;
 
-  todoList.innerHTML = savedTasks;
-
-  todoList.querySelectorAll("li").forEach((li) => {
-    li.querySelector("span").addEventListener("click", () => {
-      li.classList.toggle("completed");
-      saveTasks();
-    });
-
-    li.querySelector("button").addEventListener("click", () => {
-      li.remove();
-      saveTasks();
-    });
+  const tasks = JSON.parse(savedTasks);
+  console.log(tasks);
+  tasks.forEach((task) => {
+    addTask(task.text, task.completed);
   });
 });
