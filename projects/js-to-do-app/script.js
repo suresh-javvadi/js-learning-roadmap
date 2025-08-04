@@ -1,6 +1,23 @@
 const todoForm = document.getElementById("todo-form");
 const todoInput = document.getElementById("todo-input");
 const todoList = document.getElementById("todo-list");
+const todoPending = document.getElementById("todo-pending");
+const todoCompleted = document.getElementById("todo-completed");
+
+function updateCounts() {
+  const tasks = todoList.querySelectorAll("li");
+  let pCount = 0;
+  let cCount = 0;
+  tasks.forEach((task) => {
+    if (task.classList.contains("completed")) {
+      cCount++;
+    } else {
+      pCount++;
+    }
+  });
+  todoPending.textContent = `Pending: ${pCount}`;
+  todoCompleted.textContent = `Completed: ${cCount}`;
+}
 
 todoForm.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -21,11 +38,12 @@ function addTask(task, completed = false) {
   li.appendChild(newSpan);
   if (completed) li.classList.add("completed");
   todoList.appendChild(li);
-
   newSpan.addEventListener("click", function () {
     li.classList.toggle("completed");
     saveTasks();
+    updateCounts();
   });
+  updateCounts();
 
   const deleteBtn = document.createElement("button");
   deleteBtn.textContent = "X";
@@ -35,6 +53,7 @@ function addTask(task, completed = false) {
   deleteBtn.addEventListener("click", function () {
     li.remove();
     saveTasks();
+    updateCounts();
   });
 }
 
@@ -53,7 +72,6 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!savedTasks) return;
 
   const tasks = JSON.parse(savedTasks);
-  console.log(tasks);
   tasks.forEach((task) => {
     addTask(task.text, task.completed);
   });
