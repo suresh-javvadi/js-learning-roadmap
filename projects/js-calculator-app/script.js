@@ -8,6 +8,35 @@ let operator = "";
 buttons.forEach((button) => {
   button.addEventListener("click", () => {
     const btnText = button.textContent;
+    const lastChar = display.value.slice(-1);
+
+    if (
+      (btnText === "+" ||
+        btnText === "–" ||
+        btnText === "×" ||
+        btnText === "÷" ||
+        btnText === "%") &&
+      (lastChar === "+" ||
+        lastChar === "–" ||
+        lastChar === "×" ||
+        lastChar === "÷" ||
+        lastChar === "%")
+    ) {
+      display.value = display.value.slice(0, -1) + btnText;
+      operator = btnText;
+      return;
+    }
+
+    if (
+      display.value === "" &&
+      (btnText === "+" ||
+        btnText === "–" ||
+        btnText === "×" ||
+        btnText === "÷" ||
+        btnText === "%")
+    ) {
+      return;
+    }
 
     if (
       (btnText >= "0" && btnText <= "9") ||
@@ -22,7 +51,7 @@ buttons.forEach((button) => {
     }
 
     if ((btnText >= "0" && btnText <= "9") || btnText === ".") {
-      currValue = parseFloat(btnText);
+      currValue += btnText;
     } else if (
       btnText === "+" ||
       btnText === "–" ||
@@ -35,44 +64,29 @@ buttons.forEach((button) => {
       currValue = "";
     }
 
-    if (operator === "+") {
-      if (prevValue !== "" && currValue !== "") {
+    if (prevValue !== "" && currValue !== "") {
+      prevValue = parseFloat(prevValue);
+      currValue = parseFloat(currValue);
+
+      if (operator === "+") {
         result.value = prevValue + currValue;
-        currValue = parseFloat(result.value);
-        prevValue = "";
       }
-    }
-
-    if (operator === "–") {
-      if (prevValue !== "" && currValue !== "") {
+      if (operator === "–") {
         result.value = prevValue - currValue;
-        currValue = parseFloat(result.value);
-        prevValue = "";
       }
-    }
-
-    if (operator === "×") {
-      if (prevValue !== "" && currValue !== "") {
+      if (operator === "×") {
         result.value = prevValue * currValue;
-        currValue = parseFloat(result.value);
-        prevValue = "";
       }
-    }
+      if (operator === "÷") {
+        if (currValue !== 0) {
+          result.value = prevValue / currValue;
+        } else {
+          result.value = "Error";
+        }
+      }
 
-    if (operator === "÷") {
-      if (prevValue !== "" && currValue !== "") {
-        result.value = prevValue / currValue;
-        currValue = parseFloat(result.value);
-        prevValue = "";
-      }
-    }
-
-    if (operator === "%") {
-      if (prevValue !== "") {
-        result.value = prevValue / 100;
-        currValue = parseFloat(result.value);
-        prevValue = "";
-      }
+      currValue = parseFloat(result.value);
+      prevValue = "";
     }
 
     if (operator === "%") {
@@ -91,13 +105,20 @@ buttons.forEach((button) => {
       operator = "";
     }
 
-    if (btnText === "CE") {
-      currValue = "";
-      display.value = display.value.slice(0, -1);
-      result.value = "";
+    if (btnText === "±") {
+      if (currValue !== "") {
+        currValue = (-parseFloat(currValue)).toString();
+
+        const lastNumRegex = /[0-9.]+$/;
+        display.value = display.value.replace(lastNumRegex, currValue);
+      }
+      return;
     }
 
     if (btnText === "=") {
+      if (result.value === "") {
+        return;
+      }
       display.value = result.value;
       currValue = parseFloat(result.value);
       prevValue = "";
