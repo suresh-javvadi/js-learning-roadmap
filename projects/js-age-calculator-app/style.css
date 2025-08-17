@@ -1,0 +1,99 @@
+/* style.css */
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  background: #eef2f7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.age-cal-container {
+  background: white;
+  width: 400px;
+  padding: 30px 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.header h1 {
+  margin-bottom: 25px;
+  color: #333;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.dob-container,
+.to-date-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.dob-container label,
+.to-date-container label {
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+input[type="date"] {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 15px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  transition: border-color 0.3s ease;
+  cursor: pointer;
+}
+
+input[type="date"]:focus {
+  outline: none;
+  border-color: #0066ff;
+  box-shadow: 0 0 6px #66a3ff;
+}
+
+button#calculate {
+  margin-top: 10px;
+  padding: 12px 0;
+  border: none;
+  border-radius: 30px;
+  background-color: #0066ff;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.25s ease;
+}
+
+button#calculate:hover {
+  background-color: #004bb5;
+}
+
+.result-container {
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #222;
+  min-height: 30px;
+}
+
+/* Responsive tweak */
+@media (max-width: 400px) {
+  .age-cal-container {
+    width: 90%;
+    padding: 20px;
+  }
+}
