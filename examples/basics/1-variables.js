@@ -73,6 +73,15 @@ console.log(zz);
 let yy = null;
 console.log(yy); // null
 
+// Undefined vs Not defined
+
+var u;
+console.log(u); // undefined is allocated to the variable until value assigned
+u = 10;
+console.log(u); // 10 will replaced here
+
+console.log(n); // n is not there in the global object so it throws not defined
+
 // Dynamic typing
 
 let data = 42; // number

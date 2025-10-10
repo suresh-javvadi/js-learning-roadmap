@@ -86,6 +86,43 @@ The scope of a variable depends on both the keyword (`var`, `let`, `const`) and 
 
 ---
 
-## Dynamic Typing in JavaScript
+# Undefined vs Not Defined in JavaScript
 
-JavaScript is dynamically typed, meaning variables can hold any type of value and that type can change at runtime.
+## Undefined
+
+**Undefined** is a special keyword in JavaScript.
+
+- It is automatically allocated to variables when the JS engine reserves memory but no value has been assigned yet.
+- This acts as a placeholder until the variable is assigned another value.
+
+```js
+var u;
+console.log(u); // undefined is allocated until a value is assigned
+
+u = 10;
+console.log(u); // 10 replaces undefined
+```
+
+## Not Defined
+
+**Not Defined** refers to an error thrown when trying to access a variable that does not exist in the current scope.
+
+- This means the variable has never been declared.
+
+```js
+console.log(n); // Throws ReferenceError: n is not defined
+```
+
+## JavaScript Variable Typing
+
+JavaScript is **loosely/dynamically typed language**, meaning:
+
+- variables can hold any type of value and that type can change at runtime.
+- You do not need to declare the type of a variable.
+- You can store different types of data in the same variable over time.
+
+```js
+let data = 42; // number
+data = "Hello"; // string - allowed
+data = true; // boolean - also allowed
+```
