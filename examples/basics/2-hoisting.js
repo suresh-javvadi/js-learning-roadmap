@@ -1,10 +1,16 @@
+let aa = 10;
+console.log(aa);
+var bb = 100;
+
+console.log(window.aa); // undefined, aa is not there in global object
+
 // var hoisting
 console.log(a); // undefined
 var a = 5;
 console.log(a);
 
 //let & const hoisting
-console.log(b); // ReferenceError
+console.log(b); // ReferenceError due to TDZ
 let b;
 
 console.log(c);

@@ -71,8 +71,7 @@ console.log(c); // ReferenceError: c is not defined
 
 ## Variable Shadowing
 
-**Shadowing** occurs when a variable declared within a certain scope has the same name as a variable in an outer scope.  
-In this case, the inner variable "shadows" the outer one.
+**Shadowing** occurs when a variable in an **inner scope** has the **same name** as a variable in an **outer scope**. The **inner (nearer) variable** takes priority and **hides** the outer one.
 
 ```js
 let globalhero = "RC";
@@ -86,6 +85,19 @@ function superhero() {
 
 superhero();
 console.log(hero, "from outer scope"); // "MB"
+```
+
+## Illegal Shadowing (❌ Boundary Violation)
+
+- Shadowing should follow boundaries if not it leads to **illegal shadowing**
+
+```js
+let a = 10; // Block-scoped
+
+{
+  var a = 100; // ❌ SyntaxError: Unexpected redeclaration
+}
+// var ignores blocks = scope mismatch!
 ```
 
 ---
