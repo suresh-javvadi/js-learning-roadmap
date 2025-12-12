@@ -1,4 +1,20 @@
-/*// inner function has scope of te outer function
+function x() {
+  var a = 7;
+
+  function y() {
+    console.log(a);
+  }
+
+  return y;
+}
+
+var z = x();
+
+console.log(z);
+
+z(); // stills remembers a
+
+// inner function has scope of te outer function
 
 function outer() {
   let message = "Hello";
@@ -58,6 +74,28 @@ console.log(`Current count is ${counter.getCount()}`);
 
 counter.incremnet();
 
+// The more scalable approach is
+
+function Counter() {
+  let count = 0; // Private
+
+  this.increment = function () {
+    // Fixed: "incremnet" → "increment"
+    count++;
+    console.log(`Count: ${count}`);
+  };
+
+  this.getCount = function () {
+    return count;
+  };
+}
+
+const counter1 = new Counter();
+counter1.increment(); // 1
+counter1.increment(); // 2
+console.log(counter1.count); // undefined (private!)
+console.log(counter1.getCount()); // 2
+
 // in loops with var
 
 for (var i = 0; i < 3; i++) {
@@ -116,7 +154,6 @@ double(5); // 10
 multiply(10)(4);
 double(3); // 6 inner function remember the 2
 
-
 // module pattern
 
 function bank() {
@@ -148,7 +185,6 @@ bankAccount.balanceCheck();
 console.log(bankAccount.balance); // undefined cant access directly
 
 console.log(balance); // refrence error
-*/
 
 //	Function Factories (using Closures)
 
