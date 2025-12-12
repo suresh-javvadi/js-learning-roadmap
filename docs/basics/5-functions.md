@@ -79,7 +79,9 @@ console.log(smile("Suresh"));
 
 ## Shortest Function in JavaScript
 
+- A empty js file is the shortest function
 - Even if a **JavaScript file is empty**, the engine still creates a **Global Execution Context (GEC)**.
+- When ever Execution context is created JS will create **Global Object** and **this** (Even for functional EC's)
 
 ---
 
@@ -88,12 +90,17 @@ console.log(smile("Suresh"));
 - In browsers, the JS engine automatically creates a **global object** called `window`.
 - The `window` object provides many built-in functions and properties that can be accessed anywhere in JS.
 
+```js
+// In browser console run
+window;
+```
+
 ---
 
 ## `this` Keyword at Global Level
 
 - JavaScript also creates a special variable: **`this`**.
-- In browsers, at the global scope:
+- In browsers, at the global scope: this reference to global object or window
 
 ```js
 this === window; // true

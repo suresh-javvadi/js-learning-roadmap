@@ -36,8 +36,8 @@ This process happens in **two phases**:
 
 ### 1. Memory Creation Phase
 
-- JS allocates memory for **every variable and function**.
-- Variables → get `undefined` initially.
+- JS allocates memory for **every variable and function**. In that memory
+- Variables → stores a spacial value called `undefined` initially.
 - Functions → entire function definition is stored.
 
 ### 2. Code Execution Phase
