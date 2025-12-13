@@ -143,3 +143,129 @@ console.log(x); // Error: x is not defined (because it's local to function b)
 2. The JS engine creates a **global object (`window` in browsers)**.
 3. The `this` keyword in the global scope refers to the global object.
 4. Variables and functions declared outside of any function are attached to the global object.
+
+---
+
+## Function Statement (Function Declaration)
+
+**Definition**: Writing a function with the `function` keyword. This is also called **function declaration**.
+
+**Characteristics**:
+
+- **Fully hoisted** - can be called before declaration
+- Available in global scope
+- Named function
+
+```js
+function a() {
+  console.log("a called");
+}
+a(); // ✅ Works (hoisted fully)
+```
+
+**Key**: **Fully hoisted** - can call before declaration.
+
+---
+
+## Anonymous Function
+
+**Definition**: Function **without a name**.
+
+**Important**: Cannot stand alone - causes **syntax error**.
+
+```js
+// ❌ Syntax Error!
+function () {
+console.log("anonymous");
+}
+// Error: Function statement requires a name
+```
+
+**Usage**: Always assigned to variables or passed as callbacks.
+
+---
+
+## Function Expression
+
+**Definition**: Anonymous function **assigned to a variable**.
+
+**Key Rule**: Functions assigned to variables are treated as **variables during hoisting**.
+
+```js
+var b = function () {
+  console.log("b called");
+};
+b(); // ✅ Works after assignment
+```
+
+**Hoisting Behavior**:
+
+```js
+console.log(b); // undefined (variable hoisted, function not yet)
+b(); // TypeError!
+var b = function () {
+  console.log("b called");
+};
+```
+
+- **Difference from Function Statement**: Only **variable declaration** hoisted, not the function body.
+
+---
+
+## Named Function Expression
+
+**Definition**: **Named function assigned to a variable**.
+
+```js
+var c = function xy() {
+  console.log("Hello");
+  console.log(xy); // ✅ xy accessible INSIDE the function
+};
+c(); // ✅ Works via variable name
+
+// ❌ ReferenceError!
+xy(); // xy not in global scope
+```
+
+- Reference error due to function not in the global scope, it is created like local variable
+
+**Name Scope**: `xy` exists only **inside the function** (useful for recursion/debugging).
+
+```js
+var c = function xy() {
+  console.log("Hello from", xy.name); // "Hello from xy"
+  console.log(xy === c); // true (same function)
+};
+c();
+```
+
+---
+
+## First-Class Functions
+
+**Definition**: JavaScript treats functions as **first-class citizens** - they can be:
+
+- Assigned to **variables**
+- Passed as **arguments** to other functions
+- **Returned** from functions
+
+```js
+// 1. Assigned to variables
+var zz = function yy(params) {
+  console.log(params);
+};
+
+// 2. Passed as arguments
+zz(function () {}); // Anonymous function as argument
+zz(xyz); // Named function as argument
+
+// 3. Returned from functions
+function xyz() {
+  return function () {
+    console.log("Returned function!");
+  };
+}
+
+const returnedFn = xyz();
+returnedFn(); // Works!
+```
