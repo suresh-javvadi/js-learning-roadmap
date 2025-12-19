@@ -138,3 +138,51 @@ Call Stack Empty?
 ↓ Yes
 Process ALL Microtasks → Call Stack Empty? → Process Callback Queue
 ```
+
+## setTimeout Delay Reality (Main Thread Blocking)
+
+**Key Insight**: `setTimeout()` **won't execute exactly** after timer expires.
+
+**Rule**:
+
+- ✅ **Never executes BEFORE** timer expires
+- ❌ **May execute AFTER** timer expires (if main thread busy)
+
+```js
+console.log("Start");
+
+setTimeout(function cbb() {
+  console.log("Callback now");
+}, 5000);
+
+console.log("End");
+
+let startDate = new Date().getTime();
+let endDate = startDate;
+while (endDate < startDate + 10000) {
+  // Blocks 10 seconds!
+  endDate = new Date().getTime();
+}
+console.log("While expires");
+
+// Output:
+// Start
+// End
+// While expires ← 10 seconds later!
+// Callback now ← EVEN LATER (queued during 5s, waits for stack)
+```
+
+**Execution Timeline**:
+
+```
+0s: "Start" → "End"
+5s: Timer expires → callback to Callback Queue [WAITING]
+10s: While loop ends → call stack empties
+10+x: Event Loop → pushes callback → "Callback now"
+```
+
+**Why Delay?**
+
+1. **5s timer expires** → callback **queued** (not executed)
+2. **Main thread blocked 10s** → callback **waits in queue**
+3. **Stack empty at 10s** → Event Loop finally executes callback

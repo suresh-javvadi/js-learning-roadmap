@@ -40,3 +40,22 @@ fetch("https://api.example.com").then(function cbf() {
 });
 
 console.log("End");
+
+// Timer may not execute on time
+
+console.log("Start");
+
+setTimeout(function cbb() {
+  console.log("Call back now");
+}, 5000);
+
+console.log("End");
+
+let startDate = new Date().getTime();
+let endDate = startDate;
+
+while (endDate < startDate + 10000) {
+  endDate = new Date().getTime();
+}
+
+console.log("While expires");
