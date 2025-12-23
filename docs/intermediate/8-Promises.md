@@ -1,4 +1,4 @@
-# Promises and Promise Chaining
+# Promises
 
 ## What is a Promise?
 
@@ -65,36 +65,150 @@ createOrder(cart)
 
 ---
 
-## Promise Chaining (Callback Hell Solution)
+# Promise Creation
 
-**Promise chaining** allows you to handle multiple asynchronous operations in sequence, passing the result from one `.then()` to the next.
+To create a Promise, you instantiate an object using the **`Promise` constructor**.  
+The constructor takes a function (called the _executor function_) with two parameters: **`resolve`** and **`reject`**.
+
+---
+
+## Basic Promise Structure
 
 ```js
-createOrder(cart)
+function createOrder() {
+  const pr = new Promise(function (resolve, reject) {
+    // API logic / DB calls
+  });
+  return pr;
+}
+```
+
+- **`resolve()`** — fulfills the Promise and returns the resulting data.
+- **`reject()`** — rejects the Promise and returns an error.
+
+---
+
+## Full Example
+
+```js
+const promiseC = createOrder(cart);
+
+promiseC.then(function (orderId) {
+  console.log(orderId);
+});
+
+function createOrder(cart) {
+  const pr = new Promise(function (resolve, reject) {
+    // API logic / DB calls
+    if (!validateCart(cart)) {
+      const err = new Error("Cart is not valid");
+      reject(err); // Reject the promise with an error
+      return;
+    }
+
+    const orderId = "12345"; // Simulated API response
+    resolve(orderId); // Resolve the promise with the orderId
+  });
+
+  return pr;
+}
+
+function validateCart(cart) {
+  return cart.length !== 0;
+}
+```
+
+---
+
+## Handling Rejections with `.catch()`
+
+If a Promise is **rejected** or fails, you can handle the error using the `.catch()` method.  
+This ensures that your application deals gracefully with failed asynchronous operations.
+
+```js
+const promiseC = createOrder(cart);
+
+promiseC
   .then(function (orderId) {
-    return proceedPayment(orderId); // Return next promise
+    console.log(orderId);
+    // proceedPayment(orderId);
   })
-  .then(function (paymentInfo) {
-    return orderSummary(paymentInfo); // Chain continues
-  })
-  .then(function () {
-    console.log("Order complete! 🎉");
+  .catch(function (err) {
+    console.log("Error:", err.message);
   });
 ```
 
-**Key Rule**: **Return** the next promise/result in `.then()` for chaining.
+---
 
-Each `.then()` returns a new Promise, which makes it possible to chain multiple asynchronous tasks in a readable way—this approach helps avoid **callback hell**.
+### Key Points
+
+- A **Promise** is created using the `new Promise()` constructor.
+- The **executor function** inside the Promise runs immediately upon creation.
+- Use **`resolve()`** to indicate success and **`reject()`** to signal failure.
+- Handle successful resolutions using `.then()` and errors using `.catch()`.
+- Always **return the Promise** from the function so it can be chained properly.
 
 ---
 
-## Benefits Over Callbacks
+# Promise Chaining
 
-| Problem                  | Callbacks ❌      | Promises ✅           |
-| ------------------------ | ----------------- | --------------------- |
-| **Inversion of Control** | API controls flow | **You control flow**  |
-| **Callback Hell**        | Pyramid nesting   | **Vertical chaining** |
-| **Error Handling**       | Nested try-catch  | Single `.catch()`     |
-| **Readability**          | Unreadable        | Clean chain           |
+**Promise chaining** is the process of linking multiple `.then()` calls together to handle asynchronous operations sequentially.  
+Each `.then()` returns a new Promise, allowing the next `.then()` in the chain to execute once the previous one is fulfilled.
 
 ---
+
+## Key Points
+
+- When data is passed, the callbacks inside `.then()` will execute in order.
+- Always **return** data or another Promise inside each `.then()`—this ensures that the chain continues properly.
+- If any Promise in the chain is **rejected**, the nearest `.catch()` will handle the error.
+- The `.then()` methods written **after a `.catch()`** will still run, ensuring the flow continues even after an error.
+
+---
+
+## Example
+
+```js
+function proceedToPayment(orderId) {
+  return new Promise(function (resolve, reject) {
+    if (orderId) {
+      resolve("Payment successful");
+    } else {
+      reject("Order ID is missing");
+    }
+  });
+}
+
+createOrder(cart)
+  .then(function (orderId) {
+    console.log(orderId);
+    return orderId; // Returning data to continue the chain
+  })
+  .catch(function (err) {
+    console.log("Error in order creation:", err);
+  })
+  .then(function (orderId) {
+    // This will still run even if the above catch executes
+    return proceedToPayment(orderId);
+  })
+  .then(function (info) {
+    console.log(info);
+  })
+  .catch(function (err) {
+    console.log("Error during payment:", err);
+  });
+```
+
+---
+
+## Why Use Promise Chaining?
+
+- It provides a **clean, structured way** to handle multiple asynchronous operations.
+- Each step explicitly returns a value or Promise, helping avoid **callback hell**.
+- Errors are automatically propagated to the next available `.catch()`.
+
+## Solving Callback Hell
+
+**This is how callback hell is solved** — by giving proper meaningful chain! ✅
+
+> ✅ **In short:** Promises help simplify asynchronous logic, making it easier to read, maintain, and debug compared to deeply nested callbacks.
